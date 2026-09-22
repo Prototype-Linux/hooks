@@ -1,0 +1,29 @@
+#!/bin/sh
+set -e
+
+apt-get update
+apt-get install -y --no-install-recommends git ca-certificates libgtk-3-bin sassc sudo libglib2.0-dev-bin
+
+WORKDIR="/tmp/prototype-theme-assets"
+mkdir -p "$WORKDIR"
+cd "$WORKDIR"
+
+git clone --depth 1 https://github.com/vinceliuice/Tela-icon-theme.git
+cd Tela-icon-theme
+./install.sh -d /usr/share/icons standard
+mkdir -p /usr/share/doc/tela-icon-theme
+cp COPYING /usr/share/doc/tela-icon-theme/
+cd "$WORKDIR"
+
+git clone --depth 1 https://github.com/vinceliuice/Graphite-gtk-theme.git
+cd Graphite-gtk-theme
+./install.sh -t blue --tweaks nord -d /usr/share/themes
+mkdir -p /usr/share/doc/graphite-gtk-theme
+cp COPYING /usr/share/doc/graphite-gtk-theme/
+cd "$WORKDIR"
+
+cd /
+rm -rf "$WORKDIR"
+
+apt-get purge -y git
+apt-get autoremove -y

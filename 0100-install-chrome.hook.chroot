@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+TMP_DEB="/tmp/google-chrome-stable_current_amd64.deb"
+
+apt-get update
+apt-get install -y --no-install-recommends wget ca-certificates gdebi
+update-ca-certificates
+
+wget -O "$TMP_DEB" "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+
+gdebi --non-interactive "$TMP_DEB"
+
+rm -f "$TMP_DEB"
+
+apt-get purge -y wget
+apt-get autoremove -y
