@@ -8,19 +8,27 @@ WORKDIR="/tmp/prototype-theme-assets"
 mkdir -p "$WORKDIR"
 cd "$WORKDIR"
 
-git clone --depth 1 https://github.com/vinceliuice/Tela-icon-theme.git
-cd Tela-icon-theme
-./install.sh -d /usr/share/icons standard
-mkdir -p /usr/share/doc/tela-icon-theme
-cp COPYING /usr/share/doc/tela-icon-theme/
-cd "$WORKDIR"
+if [ -d "/usr/share/icons/Tela" ]; then
+    echo "Tela icon theme already installed, skipping."
+else
+    git clone --depth 1 https://github.com/vinceliuice/Tela-icon-theme.git
+    cd Tela-icon-theme
+    ./install.sh -d /usr/share/icons standard
+    mkdir -p /usr/share/doc/tela-icon-theme
+    cp COPYING /usr/share/doc/tela-icon-theme/
+    cd "$WORKDIR"
+fi
 
-git clone --depth 1 https://github.com/vinceliuice/Graphite-gtk-theme.git
-cd Graphite-gtk-theme
-./install.sh -t blue --tweaks nord -d /usr/share/themes
-mkdir -p /usr/share/doc/graphite-gtk-theme
-cp COPYING /usr/share/doc/graphite-gtk-theme/
-cd "$WORKDIR"
+if [ -d "/usr/share/themes/Graphite-blue-nord" ]; then
+    echo "Graphite gtk theme already installed, skipping."
+else
+    git clone --depth 1 https://github.com/vinceliuice/Graphite-gtk-theme.git
+    cd Graphite-gtk-theme
+    ./install.sh -t blue --tweaks nord -d /usr/share/themes
+    mkdir -p /usr/share/doc/graphite-gtk-theme
+    cp LICENSE /usr/share/doc/graphite-gtk-theme/
+    cd "$WORKDIR"
+fi
 
 cd /
 rm -rf "$WORKDIR"
