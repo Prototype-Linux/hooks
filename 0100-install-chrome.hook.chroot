@@ -4,12 +4,19 @@ set -e
 TMP_DEB="/tmp/google-chrome-stable_current_amd64.deb"
 
 apt-get update
-apt-get install -y --no-install-recommends wget ca-certificates gdebi
+apt-get install -y --no-install-recommends wget ca-certificates gdebi-core
 update-ca-certificates
 
 wget -O "$TMP_DEB" "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
 
-gdebi --non-interactive "$TMP_DEB"
+gdebi -n "$TMP_DEB"
+
+apt-mark manual google-chrome-stable
+
+update-alternatives --set x-www-browser /usr/bin/google-chrome-stable
+update-alternatives --set gnome-www-browser /usr/bin/google-chrome-stable
+
+apt-get purge -y firefox-esr
 
 rm -f "$TMP_DEB"
 
