@@ -19,6 +19,3 @@ update-alternatives --set gnome-www-browser /usr/bin/google-chrome-stable
 apt-get purge -y firefox-esr
 
 rm -f "$TMP_DEB"
-
-apt-get purge -y wget
-apt-get autoremove -y
